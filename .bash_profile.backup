@@ -1,8 +1,4 @@
-# Identify OS and Machine -----------------------------------------
-export OS=`uname -s | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
-export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0-9]*\)'`
-export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
-export PLATFORM="$MACHINE-$OS-$OSVERSION"
+#!/bin/bash
 
 ### .bash_history ###
 # Erase duplicates
@@ -14,65 +10,76 @@ shopt -s histappend
 
 ### visual / editor ###
 export VISUAL=less
-export EDITOR=emacs
+export EDITOR=nano
  
 ### Cli Colors ###
 export CLICOLOR=1
 # use yellow for dir’s
 export LSCOLORS=dxfxcxdxbxegedabagacad
 
-#LOCAL BIN
-# Path ------------------------------------------------------------
-# Local bin should always be first priority
-if [ -d ~/bin ]; then
-  export PATH=~/bin:$PATH
-fi
- 
-### HOME BREW ###
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
- 
-export RUBYMINE_HOME="/Applications/RubyMine.app/"
- 
-#if [ -d /usr/local/etc/bash_completion.d ]; then
+# Set architecture flags
+export ARCHFLAGS="-arch x86_64"
+
+export PATH=/usr/bin:/usr/sbin:/bin:/usr/local/bin:/sbin:/Users/kfl/bin
+
+# Load .bashrc if it exists
+test -f ~/.bashrc && source ~/.bashrc
+
+# export RUBYMINE_HOME="/Applications/RubyMine.app/"
+
+# if [ -d /usr/local/etc/bash_completion.d ]; then
 #    . /usr/local/etc/bash_completion.d/git-completion.bash
-#fi
+# fi
 
 
-#Android
+## Android
 export NDK=/Users/kfl/dev/android-ndk-r10e
 export NDK_ROOT=$NDK
 export SDK_ROOT=/Users/kfl/dev/android-sdk-macosx
-export SVN_EDITOR=/usr/bin/vi  
-export PATH=$PATH:$NDK_ROOT:$SDK_ROOT/platform-tools:$SDK_ROOT/tools
+export SVN_EDITOR=/usr/bin/nano
 
-# SSH Agent ------------------------------------------------------------
-# from http://help.github.com/working-with-key-passphrases/
-SSH_ENV="$HOME/.ssh/environment"
+export PATH=$PATH:$NDK:$SDK_ROOT/platform-tools:$SDK_ROOT/tools
 
-function start_agent {
-  echo "Initializing new SSH agent..."
-  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-  chmod 600 "${SSH_ENV}"
-  . "${SSH_ENV}" > /dev/null
-  /usr/bin/ssh-add;
-}
+echo "------"
+echo $PATH
+echo "------"
 
-# Source SSH settings, if applicable
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  #ps ${SSH_AGENT_PID} doesn't work under cywgin
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-    start_agent;
-  }
-else
-  start_agent;
-fi
 
-# Load in .bashrc -------------------------------------------------
-source ~/.bashrc
+export ANDROID_SDK=$SDK_ROOT
+export ANDROID_NDK=$NDK
+
+# # # SSH Agent ------------------------------------------------------------
+# # # from http://help.github.com/working-with-key-passphrases/
+# # SSH_ENV="$HOME/.ssh/environment"
+
+# # function start_agent {
+# #   echo "Initializing new SSH agent..."
+# #   /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+# #   chmod 600 "${SSH_ENV}"
+# #   . "${SSH_ENV}" > /dev/null
+# #   /usr/bin/ssh-add;
+# # }
+
+# # # Source SSH settings, if applicable
+# # if [ -f "${SSH_ENV}" ]; then
+# #   . "${SSH_ENV}" > /dev/null
+# #   #ps ${SSH_AGENT_PID} doesn't work under cywgin
+# #   ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+# #     start_agent;
+# #   }
+# # else
+# #   start_agent;
+# # fi
+
 
 # Hello Messsage --------------------------------------------------
 echo -e "Kernel Information: " `uname -smr`
-#echo -e "${COLOR_BROWN}`bash --version`"
+echo -e "${COLOR_BROWN}`bash --version`"
 echo -ne "${COLOR_GRAY}Uptime: "; uptime
 echo -ne "${COLOR_GRAY}Server time is: "; date
+
+# Identify OS and Machine -----------------------------------------
+export OS=`uname -s | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
+export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0-9]*\)'`
+export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
+export PLATFORM="$MACHINE-$OS-$OSVERSION"
