@@ -1,0 +1,25 @@
+.Spotlight-*/
+*.Trash*
+/tmp/*
+/Network/*
+/cores/*
+/afs/*
+/automount/*
+/private/tmp/*
+/private/var/run/*
+/private/var/spool/postfix/*
+/private/var/vm/*
+/Previous Systems.localized
+/Volumes/*
+
+*Cache*
+
+/Applications/*
+/Library/*
+/System/*
+
+/Users/kfl/Movies/action/*
+/Users/kfl/Dropbox/*
+/Users/kfl/android*
+
+/Users/kfl/.*

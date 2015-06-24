@@ -1,0 +1,19 @@
+#! /bin/sh
+
+cd $1
+
+for file in */*.aif*
+do
+    echo $file
+    dir=`dirname ${file}`
+    echo $dir
+    name=`basename ${file} .aiff`
+    echo $name
+    echo 
+    wave=${dir}/${name}.wav
+    echo $wave
+    echo $dir
+    echo "---" 
+    sox $file $wave
+    rm $file
+done
