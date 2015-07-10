@@ -2,10 +2,10 @@
 
 # don't even thing about scripting a make clean for C-M
 
-#cd /Users/kfl/dev/git/private_projects/Cartoon-Mobile/AndroidBuild
+#cd /Users/kfl/dev/git/Cartoon-Mobile/AndroidBuild
 #make android-app
 
-cd /Users/kfl/dev/git/private_projects/piano-core
+cd /Users/kfl/dev/git/piano-core
 make local-install
 
 # clear all data
