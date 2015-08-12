@@ -4,7 +4,7 @@
 # Erase duplicates
 export HISTCONTROL=erasedups
 # resize history size
-export HISTSIZE=5000
+export HISTSIZE=20000
 # append to bash_history if Terminal.app quits
 shopt -s histappend
 
@@ -13,6 +13,10 @@ export VISUAL=less
 export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 
 alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+alias aud="/Applications/Audacity/Audacity.app/Contents/MacOS/Audacity"
+alias sublbp="subl ~/.bash_profile"
+alias editbp="subl ~/.bash_profile"
+
 
 ### Cli Colors ###
 export CLICOLOR=1
@@ -20,9 +24,9 @@ export CLICOLOR=1
 export LSCOLORS=dxfxcxdxbxegedabagacad
 
 # Set architecture flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
-export PATH=/usr/bin:/usr/sbin:/bin:/usr/local/bin:/sbin:/Users/kfl/bin
+export PATH=/usr/local/opt/sqlite/bin:/Users/kfl/bin:/bin:/usr/local/bin:/sbin:/usr/bin:/usr/sbin:
 
 # Load .bashrc if it exists
 test -f ~/.bashrc && source ~/.bashrc
@@ -41,11 +45,6 @@ export SDK_ROOT=/Users/kfl/dev/android-sdk-macosx
 export SVN_EDITOR=/usr/bin/nano
 
 export PATH=$PATH:$NDK:$SDK_ROOT/platform-tools:$SDK_ROOT/tools
-
-# echo "------"
-# echo $PATH
-# echo "------"
-
 
 export ANDROID_SDK=$SDK_ROOT
 export ANDROID_NDK=$NDK
@@ -73,11 +72,6 @@ export ANDROID_NDK=$NDK
 # #   start_agent;
 # # fi
 
-# OCaml Settings
-
-. /Users/kfl/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-eval `opam config env`
-
 export HOMEBREW_GITHUB_API_TOKEN=c769ceaf977ada8622e4ffef4316d5bd8e1e94f8
 
 # Hello Messsage --------------------------------------------------
@@ -92,29 +86,47 @@ export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0
 export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
 export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
-# SWITCH TO GCC
+# export OPAM_SWITCH="ANDROID"
+# export OPAM_SWITCH=""
 
-export PATH=/usr/local/bin:$PATH
-export CC=/usr/local/bin/gcc-4.9
-export CXX=/usr/local/bin/g++-4.9
-export CPP=/usr/local/bin/cpp-4.9
-export LD=/usr/local/bin/gcc-4.9
-alias c++=/usr/local/bin/c++-4.9
-alias g++=/usr/local/bin/g++-4.9
-alias gcc=/usr/local/bin/gcc-4.9
-alias cpp=/usr/local/bin/cpp-4.9
-alias ld=/usr/local/bin/gcc-4.9
-alias cc=/usr/local/bin/gcc-4.9
+if [ "$OPAM_SWITCH" == "ANDROID" ]; then
+	# SWITCH TO GCC
+	echo "ANDROID GCC"
+	export PATH=/usr/local/bin:$PATH
+	export CC=/usr/local/bin/gcc-4.9
+	export CXX=/usr/local/bin/g++-4.9
+	export CPP=/usr/local/bin/cpp-4.9
+	export LD=/usr/local/bin/gcc-4.9
+	alias c++=/usr/local/bin/c++-4.9
+	alias g++=/usr/local/bin/g++-4.9
+	alias gcc=/usr/local/bin/gcc-4.9
+	alias cpp=/usr/local/bin/cpp-4.9
+	alias ld=/usr/local/bin/gcc-4.9
+	alias cc=/usr/local/bin/gcc-4.9
+else
+	# SWITCH TO CLANG
+	echo "OS X CLANG"
+	export CC=/usr/bin/gcc
+	export CXX=/usr/bin/g++
+	export CPP=/usr/bin/cpp
+	export LD=/usr/bin/ld
+	alias c++=/usr/bin/c++
+	alias g++=/usr/bin/g++
+	alias gcc=/usr/bin/gcc
+	alias cpp=/usr/bin/cpp
+	alias cc=/usr/bin/gcc
+	alias ld=/usr/bin/ld
+fi
 
-# SWITCH TO CLANG
+eval $(ssh-agent)
 
-# export CC=/usr/bin/gcc
-# export CXX=/usr/bin/g++
-# export CPP=/usr/bin/cpp
-# export LD=/usr/bin/ld
-# alias c++=/usr/bin/c++
-# alias g++=/usr/bin/g++
-# alias gcc=/usr/bin/gcc
-# alias cpp=/usr/bin/cpp
-# alias cc=/usr/bin/gcc
-# alias ld=/usr/bin/ld
+export PKG_CONFIG_PATH=/usr/local//Cellar/sqlite/3.8.11/lib/pkgconfig
+
+
+
+
+# OCaml Settings
+
+. /Users/kfl/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+eval `opam config env`
+
